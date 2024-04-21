@@ -7,7 +7,7 @@ const width = ref(0);
 const height = ref(0);
 
 const updateDimensions = () => {
-  width.value = window.innerWidth;
+  width.value = window.innerWidth - 240;
   height.value = window.innerHeight;
 };
 
@@ -22,7 +22,7 @@ onMounted(() => {
     <SideNav />
     <div class="stream">
       <video-player
-        src="http://localhost/live/test/index.m3u8"
+        src="http://10.0.0.169/live/jake/index.m3u8"
         controls
         :width="width"
         :height="height"

@@ -1,0 +1,76 @@
+Watching for file changes with StatReloader
+Not Found: /start_stream
+Not Found: /start
+/app/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/app/backend/stream/views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /start
+/app/backend/stream/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/app/backend/stream/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /start
+/app/backend/stream/urls.py changed, reloading.
+Watching for file changes with StatReloader
+/app/backend/backend/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /api/start
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/utils/deprecation.py", line 136, in __call__
+    response = self.process_response(request, response)
+  File "/usr/local/lib/python3.10/site-packages/django/middleware/common.py", line 108, in process_response
+    return self.response_redirect_class(self.get_full_path_with_slash(request))
+  File "/usr/local/lib/python3.10/site-packages/django/middleware/common.py", line 87, in get_full_path_with_slash
+    raise RuntimeError(
+RuntimeError: You called this URL via POST, but the URL doesn't end in a slash and you have APPEND_SLASH set. Django can't redirect to the slash URL while maintaining POST data. Change your form to point to 127.0.0.1/api/start/ (note the trailing slash), or set APPEND_SLASH=False in your Django settings.
+/app/backend/stream/urls.py changed, reloading.
+Watching for file changes with StatReloader
+Starting stream Py4FPc8tJu1mITD6PEKV8MgZIsv8PDtA
+Internal Server Error: /api/start
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/backend/stream/views.py", line 22, in start_stream
+    return redirect(stream.user.username)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'jake' not found. 'jake' is not a valid view function or pattern name.
+/app/backend/stream/views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /favicon.ico
+Starting stream <QueryDict: {'call': ['publish'], 'name': ['Py4FPc8tJu1mITD6PEKV8MgZIsv8PDtA'], 'type': ['live'], 'addr': ['127.0.0.1'], 'clientid': ['5'], 'app': ['live'], 'flashver': ['FMLE/3.0 (compatible; FMSc/1.0)'], 'swfurl': ['rtmp://localhost/live'], 'tcurl': ['rtmp://localhost/live']}>
+Internal Server Error: /api/start
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/app/backend/stream/views.py", line 22, in start_stream
+    return redirect(stream.user.username)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'jake' not found. 'jake' is not a valid view function or pattern name.
+/app/backend/stream/views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting stream <QueryDict: {'call': ['publish'], 'name': ['Py4FPc8tJu1mITD6PEKV8MgZIsv8PDtA'], 'type': ['live'], 'addr': ['127.0.0.1'], 'clientid': ['7'], 'app': ['live'], 'flashver': ['FMLE/3.0 (compatible; FMSc/1.0)'], 'swfurl': ['rtmp://localhost/live'], 'tcurl': ['rtmp://localhost/live']}>
