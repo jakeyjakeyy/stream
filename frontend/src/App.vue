@@ -15,7 +15,12 @@ import "./assets/main.scss";
     />
 
     <div class="wrapper">
-      <video src="http://localhost/live/test" />
+      <video-player
+        src="http://localhost/live/test/index.m3u8"
+        controls
+        width="640"
+        height="268"
+      />
       <button class="button">lole</button>
       <HelloWorld msg="You did it!" />
 
