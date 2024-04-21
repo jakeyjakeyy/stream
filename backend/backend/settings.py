@@ -137,7 +137,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "webportfolio.log",
+            "filename": "stream.log",
         },
     },
     "root": {

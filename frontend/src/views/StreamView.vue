@@ -24,6 +24,7 @@ onMounted(() => {
       <video-player
         src="http://10.0.0.169/live/jake/index.m3u8"
         controls
+        autoplay
         :width="width"
         :height="height"
       />

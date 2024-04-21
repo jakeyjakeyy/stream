@@ -13,7 +13,7 @@
       <p class="menu-label">Following</p>
       <ul class="menu-list">
         <li>
-          <router-link to="/stream">Stream</router-link>
+          <router-link to="/watch/jake">jake</router-link>
         </li>
       </ul>
     </aside>
@@ -22,6 +22,7 @@
 
 <style>
 .menu {
+  height: 100vh;
   width: 240px;
 }
 </style>
