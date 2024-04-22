@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from stream import models
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -43,3 +44,10 @@ class UserStreamInfo(APIView):
             return Response({"error": "Stream not found."}, status=404)
 
         return Response({"isLive": stream.started_at is not None})
+
+
+class Account(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        return Response({"username": request.user.username})

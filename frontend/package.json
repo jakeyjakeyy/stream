@@ -15,7 +15,8 @@
     "@videojs-player/vue": "^1.0.0",
     "bulma": "^1.0.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue3-cookies": "^1.0.6"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",

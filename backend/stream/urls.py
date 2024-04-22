@@ -3,6 +3,8 @@ from django.urls import path
 
 from .views import *
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 def fake_view(*args, **kwargs):
     """This view should never be called because the URL paths
@@ -16,4 +18,6 @@ urlpatterns = [
     path("stop", stop_stream),
     path("live/<username>/index.m3u8", fake_view, name="hls-url"),
     path("info/<str:username>", UserStreamInfo.as_view(), name="stream-info"),
+    path("token", TokenObtainPairView.as_view(), name="token"),
+    path("token/refresh", TokenRefreshView.as_view(), name="token-refresh"),
 ]

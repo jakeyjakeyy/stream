@@ -1,7 +1,12 @@
 from django.contrib import admin
-from .models import Stream
+from .models import *
 
 
 @admin.register(Stream)
 class StreamAdmin(admin.ModelAdmin):
     list_display = ("__str__", "started_at", "is_live")
+
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ("__str__",)

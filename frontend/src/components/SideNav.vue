@@ -1,8 +1,11 @@
 <!-- Stream, Chat, About <user> -->
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LoginModal from "./LoginModal.vue";
+</script>
 
 <template>
   <div class="side-nav">
+    <LoginModal />
     <aside class="menu">
       <p class="menu-label">Routes</p>
       <ul class="menu-list">
