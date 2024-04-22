@@ -1,5 +1,5 @@
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from stream import models
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -33,3 +33,13 @@ def stop_stream(request):
     stream.started_at = None
     stream.save()
     return HttpResponse("OK")
+
+
+class UserStreamInfo(APIView):
+    def get(self, request, username):
+        stream = models.Stream.objects.filter(user__username=username).first()
+
+        if not stream:
+            return Response({"error": "Stream not found."}, status=404)
+
+        return Response({"isLive": stream.started_at is not None})

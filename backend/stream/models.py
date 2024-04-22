@@ -33,3 +33,19 @@ def create_stream_for_user(sender, instance=None, created=False, **kwargs):
     """Create a stream for new users."""
     if created:
         Stream.objects.create(user=instance)
+
+
+class Follow(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="following", on_delete=models.CASCADE
+    )
+    target = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="followers", on_delete=models.CASCADE
+    )
+
+    class Meta:
+        unique_together = ("user", "target")
+
+    def __str__(self):
+        return f"{self.user.username} follows {self.target.username}"
