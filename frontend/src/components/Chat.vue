@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
+const serverURL = import.meta.env.VITE_BACKEND_URL;
 const message = ref("");
 const messages = ref<any>([]);
 let socket: WebSocket | null = null;
 const username = document.location.pathname.split("/").pop();
 
 onMounted(() => {
-  socket = new WebSocket(`ws://localhost:8000/ws/chat/`);
+  socket = new WebSocket(`ws://${serverURL}:8000/ws/chat/${username}/`);
 
   socket.onmessage = function (event) {
-    messages.value.push(event.data);
+    messages.value.push(JSON.parse(event.data));
     console.log("WebSocket message", event);
   };
 
@@ -26,25 +27,33 @@ onUnmounted(() => {
 
 const sendMessage = () => {
   if (socket && message.value) {
-    socket.send(message.value);
+    console.log("Sending message", message.value);
+    socket.send(JSON.stringify({ message: message.value }));
     message.value = "";
   }
 };
+
+watch(messages.value, () => {
+  console.log("Messages updated", messages.value);
+});
 </script>
 
 <template>
   <div class="chat box">
     <div class="chat-messages">
-      <div class="chat-message">lole</div>
+      <div v-for="chatMessage in messages" class="chat-message">
+        {{ chatMessage.message }}
+      </div>
     </div>
     <div class="chat-input">
       <textarea
         type="text"
         class="textarea message-input"
         placeholder="Type a message..."
+        v-model="message"
         rows="1"
       />
-      <button class="button is-fullwidth">Send</button>
+      <button class="button is-fullwidth" @click="sendMessage">Send</button>
     </div>
   </div>
 </template>

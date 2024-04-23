@@ -2,6 +2,7 @@
 import { defineComponent, ref } from "vue";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
+const serverURL = import.meta.env.VITE_BACKEND_URL;
 
 const username = ref("");
 const password = ref("");
@@ -12,7 +13,7 @@ if (cookies.get("access_token") && cookies.get("refresh_token")) {
 }
 
 const submitForm = async () => {
-  const response = await fetch("http://localhost:8000/api/token", {
+  const response = await fetch(`http://${serverURL}:8000/api/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

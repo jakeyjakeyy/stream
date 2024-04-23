@@ -1,5 +1,6 @@
 <!-- Stream, Chat, About <user> -->
 <script setup lang="ts">
+const serverURL = import.meta.env.VITE_BACKEND_URL;
 import { onMounted, ref } from "vue";
 import LoginModal from "./LoginModal.vue";
 import { useCookies } from "vue3-cookies";
@@ -21,7 +22,7 @@ onMounted(async () => {
   }
 
   if (loggedIn.value === true) {
-    const response = await fetch("http://localhost:8000/api/account", {
+    const response = await fetch(`http://${serverURL}:8000/api/account`, {
       headers: {
         Authorization: `Bearer ${cookies.get("access_token")}`,
       },
@@ -69,5 +70,11 @@ onMounted(async () => {
 .menu {
   max-height: 100vh;
   width: 240px;
+}
+
+@media screen and (max-width: 768px) {
+  .menu {
+    width: 20%;
+  }
 }
 </style>

@@ -49,3 +49,9 @@ services:
 
     depends_on:
       - db
+      - redis
+
+  redis:
+    image: redis:latest # You can specify a specific version if needed
+    ports:
+      - "6379:6379" # Expose Redis default port

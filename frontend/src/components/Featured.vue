@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+const serverURL = import.meta.env.VITE_BACKEND_URL;
 
 const featured = ref<any[]>([]);
 
 onMounted(async () => {
-  const response = await fetch("http://localhost:8000/api/featured");
+  const response = await fetch(`http://${serverURL}:8000/api/featured`);
   const data = await response.json();
   featured.value = data.featured;
   console.log(featured.value);

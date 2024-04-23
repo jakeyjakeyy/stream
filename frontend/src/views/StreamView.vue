@@ -3,6 +3,7 @@
 import SideNav from "@/components/SideNav.vue";
 import Chat from "@/components/Chat.vue";
 import { ref, onMounted } from "vue";
+const serverURL = import.meta.env.VITE_BACKEND_URL;
 
 const width = ref(0);
 const height = ref(0);
@@ -36,7 +37,7 @@ onMounted(async () => {
   window.addEventListener("resize", updateDimensions);
   updateDimensions();
 
-  const info = await fetch(`http://localhost:8000/api/info/${route}`);
+  const info = await fetch(`http://${serverURL}:8000/api/info/${route}`);
   const data = await info.json();
   console.log(data);
   isLive.value = data.isLive;
@@ -49,7 +50,7 @@ onMounted(async () => {
     <div class="stream">
       <video-player
         v-if="isLive"
-        src="http://10.0.0.169/live/jake/index.m3u8"
+        :src="`http://${serverURL}/live/jake/index.m3u8`"
         controls
         autoplay
         :width="width"

@@ -1,9 +1,11 @@
 import Cookies from "js-cookie";
+import { server } from "typescript";
 
 async function RefreshToken() {
+  const serverURL = import.meta.env.VITE_BACKEND_URL;
   const refresh = Cookies.get("refresh_token");
   try {
-    const response = await fetch(`http://localhost:8000/api/token/refresh`, {
+    const response = await fetch(`http://${serverURL}:8000/api/token/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
