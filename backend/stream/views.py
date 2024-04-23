@@ -46,8 +46,41 @@ class UserStreamInfo(APIView):
         return Response({"isLive": stream.started_at is not None})
 
 
-class Account(APIView):
+class Following(APIView):
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        return Response({"username": request.user.username})
+        user = request.user
+        following = models.Follow.objects.filter(user=user)
+
+        return Response(
+            {
+                "following": [
+                    {
+                        "username": f.target.username,
+                        "isLive": f.target.stream.is_live,
+                    }
+                    for f in following
+                ]
+            },
+            status=200,
+        )
+
+
+class Featured(APIView):
+    def get(self, request):
+        featured = models.Featured.objects.all()
+
+        return Response(
+            {
+                "featured": [
+                    {
+                        "username": f.stream.user.username,
+                        "is_live": f.stream.is_live,
+                        "started_at": f.stream.started_at,
+                    }
+                    for f in featured
+                ]
+            },
+            status=200,
+        )

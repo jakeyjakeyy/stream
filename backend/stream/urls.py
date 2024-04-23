@@ -20,4 +20,6 @@ urlpatterns = [
     path("info/<str:username>", UserStreamInfo.as_view(), name="stream-info"),
     path("token", TokenObtainPairView.as_view(), name="token"),
     path("token/refresh", TokenRefreshView.as_view(), name="token-refresh"),
+    path("account", Following.as_view(), name="account"),
+    path("featured", Featured.as_view(), name="featured"),
 ]

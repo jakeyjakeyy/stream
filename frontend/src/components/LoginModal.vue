@@ -5,6 +5,11 @@ const { cookies } = useCookies();
 
 const username = ref("");
 const password = ref("");
+const loggedin = ref(false);
+
+if (cookies.get("access_token") && cookies.get("refresh_token")) {
+  loggedin.value = true;
+}
 
 const submitForm = async () => {
   const response = await fetch("http://localhost:8000/api/token", {
@@ -19,9 +24,16 @@ const submitForm = async () => {
   });
 
   const data = await response.json();
-  console.log(data);
   cookies.set("access_token", data.access);
   cookies.set("refresh_token", data.refresh);
+  loggedin.value = true;
+  window.location.reload();
+};
+
+const handleLogout = () => {
+  cookies.remove("access_token");
+  cookies.remove("refresh_token");
+  loggedin.value = false;
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -76,9 +88,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <template>
   <div class="login-modal">
-    <button class="button js-modal-trigger" data-target="login-modal">
+    <button
+      v-if="loggedin === false"
+      class="button js-modal-trigger"
+      data-target="login-modal"
+    >
       Login
     </button>
+    <button v-else class="button" @click="handleLogout">Logout</button>
     <div id="login-modal" class="modal">
       <div class="modal-background"></div>
 

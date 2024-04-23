@@ -49,3 +49,12 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.user.username} follows {self.target.username}"
+
+
+class Featured(models.Model):
+    stream = models.OneToOneField(
+        Stream, related_name="is_featured", on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.stream.user.username} is featured"

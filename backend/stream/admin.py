@@ -10,3 +10,8 @@ class StreamAdmin(admin.ModelAdmin):
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
     list_display = ("__str__",)
+
+
+@admin.register(Featured)
+class FeaturedAdmin(admin.ModelAdmin):
+    list_display = ("__str__",)
