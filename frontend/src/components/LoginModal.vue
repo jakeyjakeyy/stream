@@ -34,6 +34,7 @@ const handleLogout = () => {
   cookies.remove("access_token");
   cookies.remove("refresh_token");
   loggedin.value = false;
+  window.location.reload();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,16 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add a click event on buttons to open a specific modal
-  (document.querySelectorAll(".js-modal-trigger") || []).forEach(
-    ($trigger: any) => {
+  document.addEventListener("click", (event: any) => {
+    const $trigger = event.target.closest(".js-modal-trigger");
+
+    if ($trigger) {
       const modal = $trigger.dataset.target;
       const $target = document.getElementById(modal);
 
-      $trigger.addEventListener("click", () => {
-        openModal($target);
-      });
+      openModal($target);
     }
-  );
+  });
 
   // Add a click event on various child elements to close the parent modal
   (

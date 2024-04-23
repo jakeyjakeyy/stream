@@ -3,6 +3,7 @@
 import { onMounted, ref } from "vue";
 import LoginModal from "./LoginModal.vue";
 import { useCookies } from "vue3-cookies";
+import RefreshToken from "@/utils/RefreshToken";
 const { cookies } = useCookies();
 const loggedIn = ref(false);
 const following = ref<any[]>([]);
@@ -10,17 +11,13 @@ const following = ref<any[]>([]);
 onMounted(async () => {
   if (cookies.get("access_token") && cookies.get("refresh_token")) {
     loggedIn.value = true;
-    const refresh = await fetch("http://localhost:8000/api/token/refresh", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: cookies.get("refresh_token"),
-      }),
-    });
-    const data = await refresh.json();
-    cookies.set("access_token", data.access);
+    const refresh = await RefreshToken();
+    if (refresh?.message === "Please log in again") {
+      loggedIn.value = false;
+      cookies.remove("access_token");
+      cookies.remove("refresh_token");
+      alert("Please log in again");
+    }
   }
 
   if (loggedIn.value === true) {
@@ -37,10 +34,12 @@ onMounted(async () => {
 
 <template>
   <div class="side-nav">
-    <LoginModal />
     <aside class="menu">
       <p class="menu-label">Routes</p>
       <ul class="menu-list">
+        <li>
+          <LoginModal v-if="loggedIn === false" />
+        </li>
         <li>
           <router-link to="/" exact>Home</router-link>
         </li>
@@ -51,6 +50,15 @@ onMounted(async () => {
           <router-link :to="'/watch/' + user.username">{{
             user.username
           }}</router-link>
+        </li>
+      </ul>
+      <p class="menu-label">Account</p>
+      <ul class="menu-list">
+        <li>
+          <router-link to="/account">Account</router-link>
+        </li>
+        <li>
+          <LoginModal v-if="loggedIn === true" />
         </li>
       </ul>
     </aside>

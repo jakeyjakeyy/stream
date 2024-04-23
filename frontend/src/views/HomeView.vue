@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import SideNav from "@/components/SideNav.vue";
-import Browse from "@/components/Browse.vue";
+import Featured from "@/components/Featured.vue";
 </script>
 
 <template>
   <div class="row">
     <SideNav />
-    <Browse />
+    <Featured />
   </div>
 </template>
 

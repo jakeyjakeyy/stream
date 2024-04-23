@@ -12,8 +12,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="browser">
-    <h1>Browse</h1>
+  <div class="featured">
+    <h1>Featured</h1>
     <div class="fixed-grid has-1-cols-mobile has-5-cols-desktop">
       <div class="grid">
         <div v-for="feature in featured" class="card cell">
@@ -56,7 +56,7 @@ onMounted(async () => {
 </template>
 
 <style>
-.browser {
+.featured {
   width: 100%;
 }
 </style>
