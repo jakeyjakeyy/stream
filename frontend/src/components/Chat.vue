@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch } from "vue";
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
 const serverURL = import.meta.env.VITE_BACKEND_URL;
 const message = ref("");
 const messages = ref<any>([]);
@@ -27,8 +29,12 @@ onUnmounted(() => {
 
 const sendMessage = () => {
   if (socket && message.value) {
-    console.log("Sending message", message.value);
-    socket.send(JSON.stringify({ message: message.value }));
+    socket.send(
+      JSON.stringify({
+        message: message.value,
+        access: cookies.get("access_token"),
+      })
+    );
     message.value = "";
   }
 };
@@ -42,7 +48,7 @@ watch(messages.value, () => {
   <div class="chat box">
     <div class="chat-messages">
       <div v-for="chatMessage in messages" class="chat-message">
-        {{ chatMessage.message }}
+        {{ chatMessage.username }}: {{ chatMessage.message }}
       </div>
     </div>
     <div class="chat-input">

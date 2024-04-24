@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.shortcuts import redirect, get_object_or_404
 import logging
+from django.contrib.auth.models import User
 
 logger = logging.getLogger(__name__)
 
@@ -84,3 +85,15 @@ class Featured(APIView):
             },
             status=200,
         )
+
+
+class RegisterUser(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"error": "Username and password required."}, status=400)
+
+        user = User.objects.create_user(username=username, password=password)
+        return Response({"username": user.username}, status=201)

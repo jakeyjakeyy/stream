@@ -22,4 +22,7 @@ urlpatterns = [
     path("token/refresh", TokenRefreshView.as_view(), name="token-refresh"),
     path("account", Following.as_view(), name="account"),
     path("featured", Featured.as_view(), name="featured"),
+    path(
+        "register", RegisterUser.as_view(), name="register"
+    ),  # whipped this up super fast to make guest user, finish this later
 ]
