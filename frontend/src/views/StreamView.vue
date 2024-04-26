@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import SideNav from "@/components/SideNav.vue";
 import Chat from "@/components/Chat.vue";
+import About from "@/components/About.vue";
 import { ref, onMounted } from "vue";
 const serverURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -9,6 +10,8 @@ const width = ref(0);
 const height = ref(0);
 
 const isLive = ref(false);
+
+const streamInfo = ref<any>({});
 
 const updateDimensions = () => {
   const aspectRatio = 16 / 9;
@@ -39,6 +42,8 @@ onMounted(async () => {
 
   const info = await fetch(`http://${serverURL}:8000/api/info/${route}`);
   const data = await info.json();
+  streamInfo.value = data;
+
   console.log(data);
   isLive.value = data.isLive;
 });
@@ -47,19 +52,28 @@ onMounted(async () => {
 <template>
   <div class="row">
     <SideNav />
-    <div class="stream">
-      <video-player
-        v-if="isLive"
-        :src="`http://${serverURL}/live/jake/index.m3u8`"
-        controls
-        autoplay
-        :width="width"
-        :height="height"
-      />
-      <div v-else>
-        <h1>Stream is offline</h1>
+    <div class="streamContainer">
+      <div class="videoContainer">
+        <video-player
+          v-if="isLive"
+          :src="`http://${serverURL}/live/jake/index.m3u8`"
+          controls
+          autoplay
+          :width="width"
+          :height="height"
+        />
+        <div v-else>
+          <h1>Stream is offline</h1>
+        </div>
+        <About
+          v-if="Object.keys(streamInfo).length > 0"
+          :streamInfo="streamInfo"
+        />
+        <div v-else class="skeleton block about" />
       </div>
-      <Chat />
+      <div class="chatContainer">
+        <Chat />
+      </div>
     </div>
   </div>
 </template>
@@ -70,10 +84,22 @@ onMounted(async () => {
   flex-direction: row;
   height: 100%;
 }
-.stream {
+.streamContainer {
   display: flex;
   justify-content: center;
   align-items: start;
   width: 100%;
+}
+.videoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.chatContainer {
+  display: flex;
+  align-self: flex-end;
+  height: 100%;
 }
 </style>

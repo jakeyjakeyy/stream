@@ -70,7 +70,7 @@ watch(messages.value, () => {
   flex-direction: column;
   justify-content: space-between;
   width: 240px;
-  height: 100%;
+  height: 100vh;
   background-color: #2c2f33;
   color: white;
 }

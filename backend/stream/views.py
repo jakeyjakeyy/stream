@@ -44,7 +44,14 @@ class UserStreamInfo(APIView):
         if not stream:
             return Response({"error": "Stream not found."}, status=404)
 
-        return Response({"isLive": stream.started_at is not None})
+        return Response(
+            {
+                "isLive": stream.started_at is not None,
+                "title": stream.title,
+                "about": stream.about,
+                "name": stream.user.username,
+            }
+        )
 
 
 class Following(APIView):

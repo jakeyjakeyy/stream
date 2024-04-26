@@ -13,6 +13,8 @@ class Stream(models.Model):
     )
     key = models.CharField(max_length=32, default=get_random_string(32), unique=True)
     started_at = models.DateTimeField(null=True, blank=True)
+    title = models.CharField(max_length=100, blank=True)
+    about = models.TextField(blank=True)
 
     def __str__(self):
         return self.user.username
