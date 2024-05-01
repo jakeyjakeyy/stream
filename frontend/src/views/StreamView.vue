@@ -54,16 +54,18 @@ onMounted(async () => {
     <SideNav />
     <div class="streamContainer">
       <div class="videoContainer">
-        <video-player
-          v-if="isLive"
-          :src="`http://${serverURL}/live/jake/index.m3u8`"
-          controls
-          autoplay
-          :width="width"
-          :height="height"
-        />
-        <div v-else>
-          <h1>Stream is offline</h1>
+        <div class="videoPlayer">
+          <video-player
+            v-if="isLive"
+            :src="`http://${serverURL}/live/jake/index.m3u8`"
+            controls
+            autoplay
+            :width="width"
+            :height="height"
+          />
+          <div v-else>
+            <h1>Stream is offline</h1>
+          </div>
         </div>
         <About
           v-if="Object.keys(streamInfo).length > 0"
@@ -89,17 +91,17 @@ onMounted(async () => {
   justify-content: center;
   align-items: start;
   width: 100%;
+  height: 100vh;
 }
 .videoContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
 }
 .chatContainer {
-  display: flex;
-  align-self: flex-end;
-  height: 100%;
+  display: fixed;
+  height: 100vh;
 }
 </style>

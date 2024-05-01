@@ -7,8 +7,6 @@ const props = defineProps<{
     name: string;
   };
 }>();
-
-console.log(props.streamInfo);
 </script>
 
 <template>
@@ -33,6 +31,9 @@ console.log(props.streamInfo);
     </div>
     <div class="about box">
       <p>{{ props.streamInfo.about }}</p>
+    </div>
+    <div class="about box">
+      <p>More about blalbalabla {{ props.streamInfo.about }}</p>
     </div>
   </div>
 </template>
