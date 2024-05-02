@@ -13,11 +13,11 @@ onMounted(() => {
 
   socket.onmessage = function (event) {
     messages.value.push(JSON.parse(event.data));
-    console.log("WebSocket message", event);
+    // console.log("WebSocket message", event);
   };
 
   socket.onclose = function (event) {
-    console.log("WebSocket closed", event);
+    // console.log("WebSocket closed", event);
   };
 });
 
@@ -39,9 +39,9 @@ const sendMessage = () => {
   }
 };
 
-watch(messages.value, () => {
-  console.log("Messages updated", messages.value);
-});
+// watch(messages.value, () => {
+//   console.log("Messages updated", messages.value);
+// });
 </script>
 
 <template>

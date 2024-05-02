@@ -75,6 +75,21 @@ class Following(APIView):
         )
 
 
+class Follow(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        user = request.user
+        target = User.objects.get(username=request.data.get("username"))
+        follow = request.data.get("follow")
+        if follow:
+            models.Follow.objects.create(user=user, target=target)
+        else:
+            models.Follow.objects.filter(user=user, target=target).delete()
+
+        return Response({"follow": follow}, status=200)
+
+
 class Featured(APIView):
     def get(self, request):
         featured = models.Featured.objects.all()

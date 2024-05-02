@@ -44,7 +44,7 @@ onMounted(async () => {
   const data = await info.json();
   streamInfo.value = data;
 
-  console.log(data);
+  // console.log(data);
   isLive.value = data.isLive;
 });
 </script>
@@ -64,7 +64,12 @@ onMounted(async () => {
             :height="height"
           />
           <div v-else>
-            <h1>Stream is offline</h1>
+            <figure class="image is-4by3">
+              <img
+                src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                alt="Placeholder image"
+              />
+            </figure>
           </div>
         </div>
         <About
@@ -96,6 +101,7 @@ onMounted(async () => {
 .videoContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100vh;
   overflow-y: scroll;

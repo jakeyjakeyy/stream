@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Follow from "./Follow.vue";
 const props = defineProps<{
   streamInfo: {
     isLive: boolean;
@@ -25,6 +26,9 @@ const props = defineProps<{
           <div class="media-content">
             <p class="title is-4">{{ props.streamInfo.name }}</p>
             <p class="subtitle is-6">{{ props.streamInfo.title }}</p>
+          </div>
+          <div class="media-right">
+            <Follow />
           </div>
         </div>
       </div>
