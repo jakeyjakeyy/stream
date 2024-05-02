@@ -26,4 +26,6 @@ urlpatterns = [
         "register", RegisterUser.as_view(), name="register"
     ),  # whipped this up super fast to make guest user, finish this later
     path("follow", Follow.as_view(), name="follow"),
+    path("whoami", WhoAmI.as_view(), name="whoami"),
+    path("update", Update.as_view(), name="update"),
 ]

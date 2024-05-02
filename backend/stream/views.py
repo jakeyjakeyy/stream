@@ -119,3 +119,22 @@ class RegisterUser(APIView):
 
         user = User.objects.create_user(username=username, password=password)
         return Response({"username": user.username}, status=201)
+
+
+class WhoAmI(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        return Response({"username": request.user.username}, status=200)
+
+
+class Update(APIView):  # Update elements of users stream
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        user = request.user
+        if request.data.get("title"):
+            stream = models.Stream.objects.get(user=user)
+            stream.title = request.data.get("title")
+            stream.save()
+            return Response({"title": stream.title}, status=200)
