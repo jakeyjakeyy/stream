@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 const serverURL = import.meta.env.VITE_BACKEND_URL;
@@ -13,6 +13,7 @@ onMounted(() => {
 
   socket.onmessage = function (event) {
     messages.value.push(JSON.parse(event.data));
+    scrollToBottom();
     // console.log("WebSocket message", event);
   };
 
@@ -39,6 +40,22 @@ const sendMessage = () => {
   }
 };
 
+const chatMessages = ref<HTMLElement | null>(null);
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (chatMessages.value) {
+      const { scrollTop, scrollHeight, clientHeight } = chatMessages.value;
+      const distanceFromBottom = scrollHeight - (scrollTop + clientHeight);
+      console.log("Distance from bottom", distanceFromBottom);
+      if (distanceFromBottom <= 34) {
+        // i dont know why 34 is the lowest value from distanceFromBottom value but it works
+        chatMessages.value.scrollTop = scrollHeight;
+      }
+    }
+  });
+};
+
 // watch(messages.value, () => {
 //   console.log("Messages updated", messages.value);
 // });
@@ -46,7 +63,7 @@ const sendMessage = () => {
 
 <template>
   <div class="chat box">
-    <div class="chat-messages">
+    <div class="chat-messages" ref="chatMessages">
       <div v-for="chatMessage in messages" class="chat-message">
         {{ chatMessage.username }}: {{ chatMessage.message }}
       </div>
@@ -58,6 +75,7 @@ const sendMessage = () => {
         placeholder="Type a message..."
         v-model="message"
         rows="1"
+        @keydown.enter.prevent="sendMessage"
       />
       <button class="button is-fullwidth" @click="sendMessage">Send</button>
     </div>
@@ -79,6 +97,7 @@ const sendMessage = () => {
   flex-direction: column;
   gap: 10px;
   padding: 0 10px;
+  margin-bottom: 10px;
   overflow-y: auto;
   height: 100%;
 }
