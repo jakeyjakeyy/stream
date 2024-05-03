@@ -101,6 +101,7 @@ class Featured(APIView):
                         "username": f.stream.user.username,
                         "is_live": f.stream.is_live,
                         "started_at": f.stream.started_at,
+                        "about": f.stream.about,
                     }
                     for f in featured
                 ]

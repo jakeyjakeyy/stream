@@ -152,7 +152,7 @@ textarea {
   height: 100%;
   border: none;
   background-color: transparent;
-  color: white;
+  font-weight: bold;
   outline: none;
   cursor: text;
 }
