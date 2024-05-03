@@ -15,7 +15,9 @@ const { cookies } = useCookies();
 const loggedIn = ref(false);
 const ownsPage = ref(false);
 const editTitle = ref(false);
+const editAbout = ref(false);
 const updatedTitle = ref(props.streamInfo.title);
+const updatedAbout = ref(props.streamInfo.about);
 
 onMounted(async () => {
   if (cookies.get("access_token") && cookies.get("refresh_token")) {
@@ -47,6 +49,26 @@ const toggleEdit = () => {
     props.streamInfo.title = updatedTitle.value;
   }
 };
+const toggleEditAbout = () => {
+  editAbout.value = !editAbout.value;
+  if (updatedAbout.value !== props.streamInfo.about) {
+    fetch(`http://${serverURL}:8000/api/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.get("access_token")}`,
+      },
+      body: JSON.stringify({
+        about: props.streamInfo.about,
+      }),
+    });
+    props.streamInfo.about = updatedAbout.value;
+  }
+};
+const getRows = (text: string) => {
+  const lineBreaks = (text.match(/\n/g) || []).length;
+  return lineBreaks + 1; // Add 1 for the first line
+};
 </script>
 
 <template>
@@ -66,8 +88,12 @@ const toggleEdit = () => {
             <p class="title is-4">{{ props.streamInfo.name }}</p>
             <textarea
               v-if="ownsPage && editTitle"
+              id="titleTextArea"
+              class="subtitle is-6"
               v-model="updatedTitle"
               @blur="toggleEdit"
+              rows="1"
+              autofocus
             />
             <p v-else class="subtitle is-6" @click="toggleEdit">
               {{ props.streamInfo.title }}
@@ -80,12 +106,18 @@ const toggleEdit = () => {
       </div>
     </div>
     <div class="about box">
-      <p>
+      <textarea
+        class="subtitle is-6"
+        v-if="ownsPage && editAbout"
+        id="aboutTextArea"
+        v-model="updatedAbout"
+        @blur="toggleEditAbout"
+        :rows="getRows(props.streamInfo.about)"
+        autofocus
+      />
+      <p v-else @click="toggleEditAbout">
         {{ props.streamInfo.about }}
       </p>
-    </div>
-    <div class="about box">
-      <p>More about blalbalabla {{ props.streamInfo.about }}</p>
     </div>
   </div>
 </template>
@@ -105,6 +137,7 @@ const toggleEdit = () => {
 }
 .about {
   width: 100%;
+  white-space: pre-wrap;
 }
 
 textarea {
@@ -114,14 +147,12 @@ textarea {
   border: none;
   background-color: transparent;
   color: white;
-  font-weight: bold;
-  font-family: "Roboto", sans-serif;
-  padding: 0;
-  margin: 0;
   outline: none;
-  overflow: hidden;
+  cursor: text;
+}
+#titleTextArea {
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-  cursor: pointer;
 }
 </style>

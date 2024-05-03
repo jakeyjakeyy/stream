@@ -138,3 +138,8 @@ class Update(APIView):  # Update elements of users stream
             stream.title = request.data.get("title")
             stream.save()
             return Response({"title": stream.title}, status=200)
+        if request.data.get("about"):
+            stream = models.Stream.objects.get(user=user)
+            stream.about = request.data.get("about")
+            stream.save()
+            return Response({"about": stream.about}, status=200)
