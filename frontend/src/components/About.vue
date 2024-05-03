@@ -33,41 +33,40 @@ onMounted(async () => {
     }
   }
 });
+
+const fetchUpdate = async (edit: string, body: any) => {
+  fetch(`http://${serverURL}:8000/api/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cookies.get("access_token")}`,
+    },
+    body: JSON.stringify({
+      [edit]: body,
+    }),
+  });
+};
 const toggleEdit = () => {
   editTitle.value = !editTitle.value;
   if (updatedTitle.value !== props.streamInfo.title) {
-    fetch(`http://${serverURL}:8000/api/update`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.get("access_token")}`,
-      },
-      body: JSON.stringify({
-        title: updatedTitle.value,
-      }),
-    });
+    fetchUpdate("title", updatedTitle.value);
     props.streamInfo.title = updatedTitle.value;
   }
 };
 const toggleEditAbout = () => {
   editAbout.value = !editAbout.value;
   if (updatedAbout.value !== props.streamInfo.about) {
-    fetch(`http://${serverURL}:8000/api/update`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.get("access_token")}`,
-      },
-      body: JSON.stringify({
-        about: props.streamInfo.about,
-      }),
-    });
+    fetchUpdate("about", updatedAbout.value);
     props.streamInfo.about = updatedAbout.value;
   }
 };
 const getRows = (text: string) => {
+  // so the aboutTextArea doesnt collapse on edit
   const lineBreaks = (text.match(/\n/g) || []).length;
-  return lineBreaks + 1; // Add 1 for the first line
+  return lineBreaks + 1;
+};
+const uploadImage = (type: string) => {
+  console.log(`Uplading ${type} image`);
 };
 </script>
 
@@ -79,6 +78,7 @@ const getRows = (text: string) => {
           <div class="media-left">
             <figure class="image is-48x48">
               <img
+                @click="uploadImage('profile')"
                 src="https://bulma.io/assets/images/placeholders/96x96.png"
                 alt="Placeholder image"
               />
@@ -95,7 +95,12 @@ const getRows = (text: string) => {
               rows="1"
               autofocus
             />
-            <p v-else class="subtitle is-6" @click="toggleEdit">
+            <p
+              v-else
+              class="subtitle is-6"
+              style="cursor: pointer"
+              @click="toggleEdit"
+            >
               {{ props.streamInfo.title }}
             </p>
           </div>
@@ -115,7 +120,7 @@ const getRows = (text: string) => {
         :rows="getRows(props.streamInfo.about)"
         autofocus
       />
-      <p v-else @click="toggleEditAbout">
+      <p v-else @click="toggleEditAbout" style="cursor: pointer">
         {{ props.streamInfo.about }}
       </p>
     </div>
@@ -130,6 +135,7 @@ const getRows = (text: string) => {
   align-items: start;
   width: 100%;
   height: 100%;
+  margin-bottom: 25px;
 }
 .card {
   width: 100%;

@@ -49,7 +49,7 @@ const scrollToBottom = () => {
       const distanceFromBottom = scrollHeight - (scrollTop + clientHeight);
       console.log("Distance from bottom", distanceFromBottom);
       if (distanceFromBottom <= 34) {
-        // i dont know why 34 is the lowest value from distanceFromBottom value but it works
+        // I dont know why 34 is the lowest value from distanceFromBottom instead of 0
         chatMessages.value.scrollTop = scrollHeight;
       }
     }

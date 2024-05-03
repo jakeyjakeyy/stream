@@ -64,12 +64,13 @@ onMounted(async () => {
             :height="height"
           />
           <div v-else>
-            <figure class="image is-4by3">
-              <img
-                src="https://bulma.io/assets/images/placeholders/1280x960.png"
-                alt="Placeholder image"
-              />
-            </figure>
+            <img
+              class="image is-16by9"
+              :width="width"
+              :height="height"
+              src="https://bulma.io/assets/images/placeholders/1280x960.png"
+              alt="Placeholder image"
+            />
           </div>
         </div>
         <About
