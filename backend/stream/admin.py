@@ -15,3 +15,8 @@ class FollowAdmin(admin.ModelAdmin):
 @admin.register(Featured)
 class FeaturedAdmin(admin.ModelAdmin):
     list_display = ("__str__",)
+
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ("__str__",)

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Follow from "./Follow.vue";
+import Subscribe from "./Subscribe.vue";
 const props = defineProps<{
   streamInfo: {
     isLive: boolean;
@@ -106,6 +107,7 @@ const uploadImage = (type: string) => {
           </div>
           <div class="media-right">
             <Follow />
+            <Subscribe />
           </div>
         </div>
       </div>

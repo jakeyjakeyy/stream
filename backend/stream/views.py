@@ -8,6 +8,8 @@ from django.utils import timezone
 from django.shortcuts import redirect, get_object_or_404
 import logging
 from django.contrib.auth.models import User
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 logger = logging.getLogger(__name__)
 
@@ -144,3 +146,23 @@ class Update(APIView):  # Update elements of users stream
             stream.about = request.data.get("about")
             stream.save()
             return Response({"about": stream.about}, status=200)
+
+
+class Subscribe(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        user = request.user
+        targetU = User.objects.get(username=request.data.get("target"))
+        target = models.Stream.objects.get(user=targetU)
+        subscribe = request.data.get("subscribe")
+        now = datetime.now()
+        one_month = now + relativedelta(months=1)
+        if subscribe:
+            models.Subscription.objects.create(
+                user=user, stream=target, expires_at=one_month
+            )
+        else:
+            models.Subscription.objects.filter(user=user, stream=target).delete()
+
+        return Response({"subscribe": subscribe}, status=200)

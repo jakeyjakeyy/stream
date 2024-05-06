@@ -28,4 +28,5 @@ urlpatterns = [
     path("follow", Follow.as_view(), name="follow"),
     path("whoami", WhoAmI.as_view(), name="whoami"),
     path("update", Update.as_view(), name="update"),
+    path("subscribe", Subscribe.as_view(), name="subscribe"),
 ]

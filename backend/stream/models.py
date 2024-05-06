@@ -60,3 +60,19 @@ class Featured(models.Model):
 
     def __str__(self):
         return f"{self.stream.user.username} is featured"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="subscriptions", on_delete=models.CASCADE
+    )
+    stream = models.ForeignKey(
+        Stream, related_name="subscribers", on_delete=models.CASCADE
+    )
+    expires_at = models.DateTimeField()
+
+    class Meta:
+        unique_together = ("user", "stream")
+
+    def __str__(self):
+        return f"{self.user.username} is subscribed to {self.stream.user.username}"
