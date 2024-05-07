@@ -5,6 +5,7 @@ const serverURL = import.meta.env.VITE_BACKEND_URL;
 const { cookies } = useCookies();
 import RefreshToken from "@/utils/RefreshToken";
 const subscribed = ref(false);
+const renewSub = ref(false);
 const subRemaining = ref("");
 
 const calculateDaysRemaining = (utcDateTime: any) => {
@@ -34,7 +35,7 @@ const handleSub = async () => {
       },
       body: JSON.stringify({
         target: window.location.pathname.split("/").pop(),
-        subscribe: true,
+        subscribe: !subscribed.value,
       }),
     });
     const data = await res.json();
@@ -64,8 +65,7 @@ const checkSub = async () => {
     if (data.subscribed) {
       subRemaining.value = calculateDaysRemaining(data.expires);
       subscribed.value = true;
-    } else {
-      subscribed.value = false;
+      renewSub.value = data.renew;
     }
     if (data.code === "token_not_valid") {
       await RefreshToken();
@@ -84,7 +84,9 @@ onMounted(() => {
 <template>
   <div class="subscribe">
     <button class="subscribeButton button tooltip" @click="handleSub">
-      Subscribe
+      <span v-if="subscribed && !renewSub">Resubscribe</span>
+      <span v-else-if="subscribed">Unsubscribe</span>
+      <span v-else>Subscribe</span>
       <span class="tooltiptext">{{ subRemaining }}</span>
     </button>
   </div>
@@ -99,21 +101,19 @@ onMounted(() => {
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: fit-content;
   background-color: black;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px;
   border-radius: 6px;
 
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
   top: 5%;
   right: 105%;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }

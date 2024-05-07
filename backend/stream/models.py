@@ -70,6 +70,7 @@ class Subscription(models.Model):
         Stream, related_name="subscribers", on_delete=models.CASCADE
     )
     expires_at = models.DateTimeField()
+    renew = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ("user", "stream")
