@@ -156,12 +156,20 @@ class Subscribe(APIView):
         targetU = User.objects.get(username=request.data.get("target"))
         target = models.Stream.objects.get(user=targetU)
         subscribe = request.data.get("subscribe")
-        now = datetime.now()
-        one_month = now + relativedelta(months=1)
-        if subscribe:
+        if subscribe == True:
+            now = datetime.now()
+            one_month = now + relativedelta(months=1)
             models.Subscription.objects.create(
                 user=user, stream=target, expires_at=one_month
             )
+        elif subscribe == "check":
+            sub = models.Subscription.objects.get(user=user, stream=target)
+            if sub:
+                return Response(
+                    {"subscribed": True, "expires": sub.expires_at}, status=200
+                )
+            else:
+                return Response({"subscribed": False}, status=200)
         else:
             models.Subscription.objects.filter(user=user, stream=target).delete()
 
