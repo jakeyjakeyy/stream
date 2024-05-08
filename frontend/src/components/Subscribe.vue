@@ -36,6 +36,7 @@ const handleSub = async () => {
       body: JSON.stringify({
         target: window.location.pathname.split("/").pop(),
         subscribe: !subscribed.value,
+        renew: subscribed.value && !renewSub.value,
       }),
     });
     const data = await res.json();
@@ -46,6 +47,7 @@ const handleSub = async () => {
     }
     i++;
   }
+  checkSub();
 };
 const checkSub = async () => {
   let i = 0;

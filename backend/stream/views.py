@@ -173,6 +173,10 @@ class Subscribe(APIView):
                 return Response({"subscribed": False}, status=200)
         elif subscribe == False:
             sub = models.Subscription.objects.get(user=user, stream=target)
+            if request.data.get("renew"):
+                sub.renew = True
+                sub.save()
+                return Response({"renew": True}, status=200)
             sub.renew = False
             sub.save()
             return Response({"renew": False}, status=200)
