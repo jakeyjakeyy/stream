@@ -48,7 +48,7 @@ const follow = async () => {
       v-if="isFollowing"
       name="bi-suit-heart-fill"
       scale="1.25"
-      color="darkred"
+      color="red"
       @click="follow"
     />
     <v-icon v-else name="bi-suit-heart" scale="1.25" @click="follow" />

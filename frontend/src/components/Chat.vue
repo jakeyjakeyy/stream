@@ -89,8 +89,7 @@ const scrollToBottom = () => {
   justify-content: space-between;
   width: 240px;
   height: 100vh;
-  background-color: #2c2f33;
-  color: white;
+  background-color: var(--color-background-mute);
 }
 .chat-messages {
   display: flex;

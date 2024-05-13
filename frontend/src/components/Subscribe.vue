@@ -85,7 +85,10 @@ onMounted(() => {
 
 <template>
   <div class="subscribe">
-    <button class="subscribeButton button tooltip" @click="handleSub">
+    <button
+      class="subscribeButton button tooltip is-primary"
+      @click="handleSub"
+    >
       <span v-if="subscribed && !renewSub">Resubscribe</span>
       <span v-else-if="subscribed">Unsubscribe</span>
       <span v-else>Subscribe</span>

@@ -137,11 +137,11 @@ const uploadImage = (type: string) => {
   align-items: start;
   width: 100%;
   height: 100%;
-  margin-bottom: 25px;
+  padding: 10px;
+  background-color: var(--color-background-mute);
 }
 .card {
   width: 100%;
-  margin-bottom: 10px;
 }
 .about {
   width: 100%;
